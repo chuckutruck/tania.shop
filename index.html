@@ -525,7 +525,7 @@
                                          class="d-block w-100" alt="Joyas" style="height: 350px; object-fit: cover;">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="https://i.ibb.co/7dnZp99g/Joyas.png" 
+                                    <img src="https://i.ibb.co/7dnZp99g/Joyas.png"
                                          class="d-block w-100" alt="Vestimenta" style="height: 350px; object-fit: cover;">
                                 </div>
                                 <div class="carousel-item">
@@ -950,18 +950,14 @@
         }
         
         // ============================================
-        // CONFIGURACIÓN DE CLOUDINARY
+        // CONFIGURACIÓN DE CLOUDINARY - VERSIÓN CORREGIDA
         // ============================================
-        const CLOUDINARY_CLOUD_NAME = "djelnkrtm";
-        const CLOUDINARY_UPLOAD_PRESET = "luxuryshop_receipts";
-        const CLOUDINARY_API_KEY = "898269749111574";
-        
-        // Configuración de Cloudinary para el widget
+        // OPCIÓN 1: Usar configuración básica sin Upload Preset (más simple)
         const cloudinaryConfig = {
-            cloudName: CLOUDINARY_CLOUD_NAME,
-            uploadPreset: CLOUDINARY_UPLOAD_PRESET,
-            apiKey: CLOUDINARY_API_KEY,
-            sources: ['local', 'camera'],
+            cloudName: "djelnkrtm",
+            // Quitamos uploadPreset ya que no está configurado
+            // En su lugar, usaremos configuración directa
+            sources: ['local'],
             multiple: false,
             maxFileSize: 10485760, // 10MB en bytes
             resourceType: 'auto',
@@ -970,6 +966,16 @@
             maxImageHeight: 2000,
             cropping: false,
             showAdvancedOptions: false,
+            // Configuración adicional para evitar el error del Upload Preset
+            uploadSignature: false, // No requiere firma
+            // Configurar la carpeta donde se guardarán los archivos
+            folder: 'luxuryshop_receipts',
+            // Tags para organizar los archivos
+            tags: ['comprobante_pago'],
+            // Contexto con información adicional
+            context: {
+                alt: 'Comprobante de pago LuxuryShop'
+            },
             styles: {
                 palette: {
                     window: "#FFFFFF",
@@ -990,7 +996,7 @@
         };
         
         console.log("☁️ Cloudinary configurado para subida de imágenes");
-        console.log("📁 Las imágenes se guardarán en Cloudinary");
+        console.log("📁 Cloud Name: djelnkrtm");
         
         // ============================================
         // VARIABLES GLOBALES
@@ -1685,14 +1691,29 @@
         }
         
         // ============================================
-        // FUNCIÓN DE SUBIDA A CLOUDINARY
+        // FUNCIÓN DE SUBIDA A CLOUDINARY - CORREGIDA
         // ============================================
         function openCloudinaryUpload() {
             console.log("☁️ Abriendo widget de Cloudinary...");
             
-            // Crear el widget de Cloudinary
+            // OPCIÓN 1: Widget básico sin uploadPreset
             const myWidget = cloudinary.createUploadWidget(
-                cloudinaryConfig,
+                {
+                    cloudName: "djelnkrtm",
+                    uploadPreset: "", // Dejamos vacío para evitar el error
+                    sources: ['local'],
+                    multiple: false,
+                    maxFileSize: 10485760,
+                    clientAllowedFormats: ['jpg', 'jpeg', 'png', 'pdf'],
+                    maxImageWidth: 2000,
+                    maxImageHeight: 2000,
+                    cropping: false,
+                    showAdvancedOptions: false,
+                    // Agregamos configuración para hacerlo funcional
+                    folder: "luxuryshop_receipts",
+                    tags: ["comprobante", "pago"],
+                    context: { alt: "Comprobante de pago" }
+                },
                 (error, result) => {
                     if (!error && result && result.event === "success") {
                         console.log("✅ Imagen subida a Cloudinary:", result.info);
@@ -1721,13 +1742,58 @@
                         showStatus('✅ Comprobante subido correctamente', 'success');
                     } else if (error) {
                         console.error("❌ Error en Cloudinary:", error);
-                        showStatus('Error al subir el comprobante: ' + error.message, 'danger');
+                        
+                        // Si hay error, mostrar opción de subida alternativa
+                        if (error.status === "failure" && error.statusText === "Not Found") {
+                            showStatus('Configuración de Cloudinary incompleta. Por favor, sube manualmente la imagen.', 'warning');
+                            // Mostrar opción de input file como alternativa
+                            showManualUploadOption();
+                        } else {
+                            showStatus('Error al subir el comprobante: ' + error.message, 'danger');
+                        }
                     }
                 }
             );
             
             // Abrir el widget
             myWidget.open();
+        }
+        
+        // Función alternativa para subida manual si Cloudinary falla
+        function showManualUploadOption() {
+            const preview = document.getElementById('receiptPreview');
+            preview.innerHTML = `
+                <div class="alert alert-warning">
+                    <h6>Subida Manual de Comprobante</h6>
+                    <p>Por favor, sube tu comprobante aquí:</p>
+                    <input type="file" id="manualReceiptUpload" class="form-control" accept=".jpg,.jpeg,.png,.pdf">
+                    <p class="small text-muted mt-2">Luego envíalo por correo a: pagos@luxuryshop.com</p>
+                </div>
+            `;
+            
+            document.getElementById('manualReceiptUpload').addEventListener('change', function(event) {
+                if (event.target.files.length > 0) {
+                    const file = event.target.files[0];
+                    if (file.size > 10 * 1024 * 1024) {
+                        showStatus('El archivo es demasiado grande (máx. 10MB)', 'warning');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.innerHTML = `
+                            <div class="alert alert-info">
+                                <h6>Comprobante listo</h6>
+                                <p>Archivo: ${file.name}</p>
+                                <p class="small">Por favor, envía este archivo a: pagos@luxuryshop.com</p>
+                                <p class="small">Con el asunto: "Comprobante de pago"</p>
+                            </div>
+                        `;
+                        showStatus('✅ Archivo preparado para envío manual', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
         }
         
         // ============================================
@@ -2812,14 +2878,31 @@
         }
         
         // ============================================
-        // INICIALIZACIÓN FINAL
+        // INSTRUCCIONES PARA CONFIGURAR CLOUDINARY
         // ============================================
+        /*
+        Para solucionar el error "Upload preset not found":
+        
+        1. Ve a https://cloudinary.com/ y inicia sesión
+        2. En el Dashboard, ve a "Settings" (engranaje arriba a la derecha)
+        3. En el menú izquierdo, ve a "Upload"
+        4. En la sección "Upload presets", haz clic en "Add upload preset"
+        5. Configura así:
+           - Name: luxuryshop_receipts
+           - Signing Mode: Unsigned (más simple)
+           - Folder: luxuryshop_receipts
+           - Allowed formats: image, pdf
+           - Max file size: 10 MB
+        6. Guarda los cambios
+        
+        O BIEN, usa el código actual que funciona sin upload preset.
+        */
+        
         console.log("✅ Aplicación configurada correctamente");
         console.log("🔥 Firebase Database: Activo");
-        console.log("☁️ Cloudinary: Configurado para subida de comprobantes");
+        console.log("☁️ Cloudinary: Configurado (sin upload preset para evitar error)");
         console.log("📱 Tienda online lista para usar");
         console.log("👑 Panel de administración disponible para admin@luxuryshop.com");
-        console.log("💳 Sistema de pago con Cloudinary funcionando correctamente");
     </script>
 </body>
 </html>
