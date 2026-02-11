@@ -341,35 +341,6 @@
             padding: 2rem;
         }
         
-        /* Panel de Administración */
-        .admin-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .stats-card {
-            border-radius: 10px;
-            padding: 20px;
-            color: white;
-            margin-bottom: 20px;
-        }
-        
-        .stats-total {
-            background: linear-gradient(135deg, #4361ee, #3a0ca3);
-        }
-        
-        .stats-pending {
-            background: linear-gradient(135deg, #ff9a00, #ff5e00);
-        }
-        
-        .stats-completed {
-            background: linear-gradient(135deg, #00b09b, #96c93d);
-        }
-        
         /* Responsive */
         @media (max-width: 768px) {
             .cart-sidebar {
@@ -387,10 +358,6 @@
             
             .auth-modal .modal-body {
                 padding: 1.5rem;
-            }
-            
-            .admin-container {
-                padding: 15px;
             }
         }
     </style>
@@ -484,6 +451,22 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" onclick="showCategory('Accesorios')">Accesorios</a>
+                        </li>
+                        <!-- Nuevas pestañas de información -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="acerca.html">Acerca de</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contacto.html">Contáctenos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="politicas.html">Políticas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="mision.html">Misión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="vision.html">Visión</a>
                         </li>
                     </ul>
                     
@@ -694,110 +677,11 @@
         </div>
     </div>
 
-    <!-- Panel de Administración -->
-    <div id="adminPage" class="admin-container" style="display: none;">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="section-title">Panel de Administración</h2>
-            <div>
-                <button class="btn btn-outline-secondary me-2" onclick="returnToShop()">
-                    <i class="fas fa-store me-1"></i> Volver a la Tienda
-                </button>
-                <button class="btn btn-primary" onclick="loadAdminOrders()">
-                    <i class="fas fa-sync-alt me-1"></i> Actualizar
-                </button>
-            </div>
-        </div>
-        
-        <div class="row mb-4">
-            <div class="col-md-4">
-                <div class="stats-card stats-total">
-                    <h5>Total Pedidos</h5>
-                    <h2 id="totalOrders">0</h2>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="stats-card stats-pending">
-                    <h5>Pedidos Pendientes</h5>
-                    <h2 id="pendingOrders">0</h2>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="stats-card stats-completed">
-                    <h5>Pedidos Completados</h5>
-                    <h2 id="completedOrders">0</h2>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card mb-4">
-                    <div class="card-header bg-secondary text-white">
-                        <h5 class="mb-0">Filtros</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Estado</label>
-                            <select class="form-select" id="statusFilter" onchange="filterAdminOrders()">
-                                <option value="all">Todos</option>
-                                <option value="pendiente">Pendiente</option>
-                                <option value="confirmado">Confirmado</option>
-                                <option value="enviado">Enviado</option>
-                                <option value="completado">Completado</option>
-                                <option value="cancelado">Cancelado</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Fecha Desde</label>
-                            <input type="date" class="form-control" id="dateFromFilter" onchange="filterAdminOrders()">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Fecha Hasta</label>
-                            <input type="date" class="form-control" id="dateToFilter" onchange="filterAdminOrders()">
-                        </div>
-                        <button class="btn btn-outline-secondary w-100" onclick="clearFilters()">
-                            <i class="fas fa-times me-1"></i> Limpiar Filtros
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">Pedidos</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Pedido #</th>
-                                        <th>Cliente</th>
-                                        <th>Fecha</th>
-                                        <th>Total</th>
-                                        <th>Estado</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="adminOrdersTable">
-                                    <tr>
-                                        <td colspan="6" class="text-center">Cargando pedidos...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="main-footer" id="mainFooter">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 mb-4">
+                <div class="col-md-3 mb-4">
                     <h4 class="logo mb-3">LuxuryShop</h4>
                     <p>Tu tienda online de confianza para productos exclusivos de alta calidad.</p>
                     <div class="mt-3">
@@ -806,7 +690,7 @@
                         <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-3 mb-4">
                     <h5 class="mb-3">Categorías</h5>
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-white-50 text-decoration-none" onclick="showCategory('Joyas')">Joyas</a></li>
@@ -815,11 +699,21 @@
                         <li><a href="#" class="text-white-50 text-decoration-none" onclick="showCategory('Accesorios')">Accesorios</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-3 mb-4">
                     <h5 class="mb-3">Contacto</h5>
                     <p class="mb-1"><i class="fas fa-map-marker-alt me-2"></i> Av. Principal 123, Ciudad</p>
                     <p class="mb-1"><i class="fas fa-phone me-2"></i> +1 234 567 890</p>
                     <p class="mb-1"><i class="fas fa-envelope me-2"></i> info@luxuryshop.com</p>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Información</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="acerca.html" class="text-white-50 text-decoration-none">Acerca de Nosotros</a></li>
+                        <li><a href="contacto.html" class="text-white-50 text-decoration-none">Contáctenos</a></li>
+                        <li><a href="politicas.html" class="text-white-50 text-decoration-none">Políticas de Privacidad</a></li>
+                        <li><a href="mision.html" class="text-white-50 text-decoration-none">Misión</a></li>
+                        <li><a href="vision.html" class="text-white-50 text-decoration-none">Visión</a></li>
+                    </ul>
                 </div>
             </div>
             <hr class="bg-white-50">
@@ -903,12 +797,6 @@
         </div>
     </div>
 
-    <!-- Botón de acceso a Admin (solo visible para admin) -->
-    <button id="adminAccessBtn" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: none;" 
-            class="btn btn-secondary" onclick="showAdminPanel()">
-        <i class="fas fa-cog"></i> Admin
-    </button>
-
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
@@ -953,27 +841,26 @@
         // CONFIGURACIÓN DE CLOUDINARY CON TUS DATOS
         // ============================================
         const CLOUDINARY_CLOUD_NAME = "djelnkrtm";
-        const CLOUDINARY_UPLOAD_PRESET = "Depositos"; // Usando tu preset
-        const CLOUDINARY_API_KEY = "898269749111574"; // Tu API Key
+        const CLOUDINARY_UPLOAD_PRESET = "Depositos";
+        const CLOUDINARY_API_KEY = "898269749111574";
         
-        // Configuración de Cloudinary según tus datos
         const cloudinaryConfig = {
             cloudName: CLOUDINARY_CLOUD_NAME,
             uploadPreset: CLOUDINARY_UPLOAD_PRESET,
             apiKey: CLOUDINARY_API_KEY,
-            sources: ['local', 'camera', 'url'], // Fuentes de archivos permitidas
-            multiple: false, // Solo una imagen a la vez
-            maxFileSize: 10485760, // 10MB en bytes
-            resourceType: 'auto', // Auto-detecta si es imagen o video
-            clientAllowedFormats: ['jpg', 'jpeg', 'png', 'pdf', 'gif', 'bmp'], // Formatos permitidos
-            maxImageWidth: 2000, // Ancho máximo
-            maxImageHeight: 2000, // Alto máximo
-            cropping: false, // No permitir recortar
-            showAdvancedOptions: false, // Opciones avanzadas ocultas
-            folder: "samples/depositos", // Tu folder especificado
-            publicId: "", // Dejar vacío para auto-generar
-            tags: ["depositos", "comprobantes", "pagos"], // Tags para organizar
-            context: {caption: "Comprobante de pago"}, // Contexto/metadatos
+            sources: ['local', 'camera', 'url'],
+            multiple: false,
+            maxFileSize: 10485760,
+            resourceType: 'auto',
+            clientAllowedFormats: ['jpg', 'jpeg', 'png', 'pdf', 'gif', 'bmp'],
+            maxImageWidth: 2000,
+            maxImageHeight: 2000,
+            cropping: false,
+            showAdvancedOptions: false,
+            folder: "samples/depositos",
+            publicId: "",
+            tags: ["depositos", "comprobantes", "pagos"],
+            context: {caption: "Comprobante de pago"},
             styles: {
                 palette: {
                     window: "#FFFFFF",
@@ -1011,9 +898,8 @@
         let allProducts = [];
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let currentCategory = 'all';
-        let allOrders = [];
         let currentReceiptUrl = '';
-        let cloudinaryWidget = null; // Variable para el widget de Cloudinary
+        let cloudinaryWidget = null;
         
         // ============================================
         // INICIALIZACIÓN DE LA APLICACIÓN
@@ -1021,33 +907,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log("🚀 DOM cargado, iniciando aplicación...");
             
-            // Configurar eventos
             setupEventListeners();
-            
-            // Inicializar widget de Cloudinary
             initializeCloudinaryWidget();
             
-            // Verificar estado de autenticación
             if (firebaseAuth) {
                 firebaseAuth.onAuthStateChanged(function(user) {
                     console.log("🔐 Estado de autenticación cambiado:", user ? "Usuario autenticado" : "No autenticado");
                     currentUser = user;
                     updateUserUI();
-                    
-                    // Mostrar botón de admin si el usuario es admin
-                    if (user && (user.email === 'admin@luxuryshop.com' || user.email === 'admin@admin.com')) {
-                        document.getElementById('adminAccessBtn').style.display = 'block';
-                    } else {
-                        document.getElementById('adminAccessBtn').style.display = 'none';
-                    }
-                    
-                    // Cargar productos
                     loadProducts();
-                    
-                    // Actualizar carrito
                     updateCartUI();
-                    
-                    // Si el usuario está autenticado, cargar también su carrito guardado en Firebase
                     if (user) {
                         loadUserCartFromFirebase();
                     }
@@ -1064,7 +933,6 @@
         function setupEventListeners() {
             console.log("🔧 Configurando eventos...");
             
-            // Login
             const loginForm = document.getElementById('loginForm');
             if (loginForm) {
                 loginForm.addEventListener('submit', function(event) {
@@ -1076,7 +944,6 @@
                 });
             }
             
-            // Registro
             const registerForm = document.getElementById('registerForm');
             if (registerForm) {
                 registerForm.addEventListener('submit', function(event) {
@@ -1087,7 +954,6 @@
                     const password = document.getElementById('registerPassword').value;
                     const confirmPassword = document.getElementById('registerConfirmPassword').value;
                     
-                    // Validaciones
                     clearAuthErrors();
                     
                     let hasError = false;
@@ -1126,7 +992,6 @@
             console.log("☁️ Inicializando widget de Cloudinary...");
             
             try {
-                // Crear el widget de Cloudinary con la configuración
                 cloudinaryWidget = cloudinary.createUploadWidget(
                     cloudinaryConfig,
                     function(error, result) {
@@ -1142,12 +1007,10 @@
                             console.log("✅ Subida exitosa a Cloudinary");
                             console.log("📄 Información del archivo:", result.info);
                             
-                            // Obtener la URL de la imagen
                             const imageUrl = result.info.secure_url;
                             currentReceiptUrl = imageUrl;
                             document.getElementById('cloudinaryReceiptUrl').value = imageUrl;
                             
-                            // Mostrar previsualización
                             const preview = document.getElementById('receiptPreview');
                             if (result.info.resource_type === 'image') {
                                 preview.innerHTML = `
@@ -1225,9 +1088,7 @@
                 return;
             }
             
-            // Verificar que el widget esté listo
             if (typeof cloudinaryWidget.open === 'function') {
-                // Abrir el widget
                 cloudinaryWidget.open();
                 console.log("✅ Widget de Cloudinary abierto");
             } else {
@@ -1287,7 +1148,6 @@
                         Object.keys(productsData).forEach(function(key) {
                             const product = productsData[key];
                             
-                            // Solo mostrar productos disponibles
                             if (product.available !== false) {
                                 allProducts.push({
                                     id: key,
@@ -1310,7 +1170,6 @@
                     console.error('❌ Error al cargar productos:', error);
                     showStatus('Error al cargar productos: ' + error.message, 'danger');
                     
-                    // Mostrar mensaje de error en la interfaz
                     document.getElementById('productsContainer').innerHTML = `
                         <div class="col-12 text-center py-5">
                             <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
@@ -1351,14 +1210,12 @@
             console.log("🔍 Filtrando productos, categoría:", currentCategory);
             let filteredProducts = [...allProducts];
             
-            // Filtrar por categoría
             if (currentCategory !== 'all') {
                 filteredProducts = filteredProducts.filter(function(product) {
                     return product.category === currentCategory;
                 });
             }
             
-            // Filtrar por estado (oferta, nuevo)
             const statusFilter = document.getElementById('filterByStatus').value;
             if (statusFilter === 'sale') {
                 filteredProducts = filteredProducts.filter(function(product) {
@@ -1370,7 +1227,6 @@
                 });
             }
             
-            // Ordenar
             const sortBy = document.getElementById('sortProducts').value;
             if (sortBy === 'price_asc') {
                 filteredProducts.sort(function(a, b) {
@@ -1389,7 +1245,6 @@
                     return a.name.localeCompare(b.name);
                 });
             } else {
-                // Más recientes primero (por defecto)
                 filteredProducts.sort(function(a, b) {
                     return (b.createdAt || 0) - (a.createdAt || 0);
                 });
@@ -1422,7 +1277,6 @@
                 const originalPrice = product.onSale && product.salePrice ? 
                     (product.price || 0) : null;
                 
-                // Verificar si el producto ya está en el carrito
                 const inCart = cart.some(function(item) {
                     return item.id === product.id;
                 });
@@ -1481,12 +1335,10 @@
             console.log("📁 Mostrando categoría:", category);
             currentCategory = category;
             
-            // Actualizar navegación activa
             document.querySelectorAll('.nav-link').forEach(function(link) {
                 link.classList.remove('active');
             });
             
-            // Activar el enlace correspondiente
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(function(link) {
                 if (link.textContent.trim() === 'Inicio' && category === 'all') {
@@ -1496,7 +1348,6 @@
                 }
             });
             
-            // Actualizar título de sección
             let sectionTitle = 'Productos Destacados';
             if (category === 'Joyas') sectionTitle = 'Joyas';
             else if (category === 'Vestimenta') sectionTitle = 'Vestimenta';
@@ -1505,10 +1356,8 @@
             
             document.getElementById('productsSectionTitle').textContent = sectionTitle;
             
-            // Filtrar productos
             filterProducts();
             
-            // Desplazar a la sección de productos
             document.getElementById('productsContainer').scrollIntoView({ 
                 behavior: 'smooth',
                 block: 'start'
@@ -1569,19 +1418,16 @@
                 return;
             }
             
-            // Verificar stock
             if (product.stock !== undefined && product.stock <= 0) {
                 showStatus('Producto agotado', 'warning');
                 return;
             }
             
-            // Verificar si ya está en el carrito
             const existingItem = cart.find(function(item) {
                 return item.id === productId;
             });
             
             if (existingItem) {
-                // Verificar stock disponible
                 if (product.stock !== undefined && existingItem.quantity >= product.stock) {
                     showStatus('Stock máximo alcanzado para este producto', 'warning');
                     return;
@@ -1597,14 +1443,10 @@
                 });
             }
             
-            // Guardar carrito
             saveCartToStorage();
             saveUserCartToFirebase();
             
-            // Actualizar UI
             updateCartUI();
-            
-            // Actualizar productos para cambiar botón
             filterProducts();
             
             showStatus('✅ Producto agregado al carrito', 'success');
@@ -1615,14 +1457,10 @@
                 return item.id !== productId;
             });
             
-            // Guardar carrito
             saveCartToStorage();
             saveUserCartToFirebase();
             
-            // Actualizar UI
             updateCartUI();
-            
-            // Actualizar productos para cambiar botón
             filterProducts();
             
             showStatus('🗑️ Producto removido del carrito', 'info');
@@ -1634,7 +1472,6 @@
             });
             
             if (item) {
-                // Encontrar el producto para verificar stock
                 const product = allProducts.find(function(p) {
                     return p.id === productId;
                 });
@@ -1656,14 +1493,12 @@
         }
         
         function updateCartUI() {
-            // Actualizar contador del carrito
             const totalItems = cart.reduce(function(sum, item) {
                 return sum + item.quantity;
             }, 0);
             
             document.getElementById('cartCount').textContent = totalItems;
             
-            // Actualizar carrito lateral si está abierto
             if (document.getElementById('cartSidebar').classList.contains('open')) {
                 updateCartSidebar();
             }
@@ -1721,7 +1556,6 @@
             
             container.innerHTML = html;
             
-            // Calcular totales
             const shipping = 5.00;
             const total = subtotal + shipping;
             
@@ -1753,7 +1587,6 @@
                 return;
             }
             
-            // Si el usuario no está autenticado, mostrar modal de login
             if (!currentUser) {
                 closeCart();
                 showLoginModal();
@@ -1766,30 +1599,22 @@
         }
         
         function showCheckoutPage() {
-            // Ocultar contenido principal
             document.getElementById('mainContent').style.display = 'none';
             document.getElementById('mainHeader').style.display = 'none';
             document.getElementById('mainFooter').style.display = 'none';
-            document.getElementById('adminPage').style.display = 'none';
             
-            // Mostrar página de checkout
             document.getElementById('checkoutPage').style.display = 'block';
             
-            // Actualizar resumen en checkout
             updateCheckoutSummary();
         }
         
         function returnToShop() {
-            // Mostrar contenido principal
             document.getElementById('mainContent').style.display = 'block';
             document.getElementById('mainHeader').style.display = 'block';
             document.getElementById('mainFooter').style.display = 'block';
             
-            // Ocultar otras páginas
             document.getElementById('checkoutPage').style.display = 'none';
-            document.getElementById('adminPage').style.display = 'none';
             
-            // Cargar productos si es necesario
             if (allProducts.length === 0) {
                 loadProducts();
             }
@@ -1820,7 +1645,6 @@
             if (container) {
                 container.innerHTML = html;
                 
-                // Calcular totales
                 const shipping = 5.00;
                 const total = subtotal + shipping;
                 
@@ -1848,27 +1672,23 @@
         function completeOrder() {
             console.log("💳 Iniciando proceso de pago...");
             
-            // Validar que el usuario esté autenticado
             if (!currentUser) {
                 showStatus('Debes iniciar sesión para completar el pedido', 'warning');
                 showLoginModal();
                 return;
             }
             
-            // Validar que haya productos en el carrito
             if (cart.length === 0) {
                 showStatus('Tu carrito está vacío', 'warning');
                 return;
             }
             
-            // Validar comprobante de pago
             const receiptUrl = document.getElementById('cloudinaryReceiptUrl').value;
             if (!receiptUrl) {
                 showStatus('Debes subir el comprobante de pago', 'warning');
                 return;
             }
             
-            // Deshabilitar botón para evitar doble clic
             const completeBtn = document.getElementById('completeOrderBtn');
             if (completeBtn) {
                 completeBtn.disabled = true;
@@ -1877,17 +1697,14 @@
             
             showLoading('Procesando tu pedido...');
             
-            // Generar número de pedido
             const orderNumber = 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
             const timestamp = Date.now();
             
-            // Extraer nombre del archivo de la URL de Cloudinary
             const urlParts = receiptUrl.split('/');
             const fileName = urlParts[urlParts.length - 1];
             
             console.log("📤 Comprobante subido a Cloudinary:", receiptUrl);
             
-            // Crear objeto de orden
             const orderData = {
                 orderNumber: orderNumber,
                 userId: currentUser.uid,
@@ -1912,13 +1729,11 @@
             
             console.log("📝 Guardando orden en Firebase Database...");
             
-            // Guardar en Firebase Database
             const ordersRef = firebaseDatabase.ref('orders');
             ordersRef.push(orderData)
                 .then(function(newOrderRef) {
                     console.log("✅ Orden guardada en Firebase Database con ID:", newOrderRef.key);
                     
-                    // También guardar en ordersByUser para fácil acceso
                     const userOrderRef = firebaseDatabase.ref('ordersByUser/' + currentUser.uid + '/' + newOrderRef.key);
                     return userOrderRef.set({
                         orderNumber: orderNumber,
@@ -1931,19 +1746,15 @@
                 .then(function() {
                     showLoading(false);
                     
-                    // Vaciar carrito
                     cart = [];
                     localStorage.removeItem('cart');
-                    saveUserCartToFirebase(); // Guardar carrito vacío
+                    saveUserCartToFirebase();
                     updateCartUI();
                     
-                    // Mostrar mensaje de éxito
                     showStatus('✅ ¡Pedido realizado con éxito! Número: ' + orderNumber, 'success');
                     
-                    // Crear modal de confirmación
                     createOrderConfirmationModal(orderNumber, receiptUrl);
                     
-                    // Regresar a la tienda después de 3 segundos
                     setTimeout(function() {
                         returnToShop();
                         if (completeBtn) {
@@ -2022,16 +1833,13 @@
                 </div>
             `;
             
-            // Agregar modal al DOM
             const modalContainer = document.createElement('div');
             modalContainer.innerHTML = modalHtml;
             document.body.appendChild(modalContainer);
             
-            // Mostrar modal
             const confirmationModal = new bootstrap.Modal(document.getElementById('orderConfirmationModal'));
             confirmationModal.show();
             
-            // Eliminar modal del DOM al cerrar
             document.getElementById('orderConfirmationModal').addEventListener('hidden.bs.modal', function() {
                 document.body.removeChild(modalContainer);
             });
@@ -2099,17 +1907,14 @@
         // FUNCIONES DE AUTENTICACIÓN
         // ============================================
         function showLoginModal() {
-            // Mostrar formulario de login por defecto
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('registerForm').style.display = 'none';
             document.getElementById('authModalTitle').textContent = 'Iniciar Sesión';
             
-            // Limpiar errores y campos
             clearAuthErrors();
             document.getElementById('loginEmail').value = '';
             document.getElementById('loginPassword').value = '';
             
-            // Mostrar modal
             const authModal = new bootstrap.Modal(document.getElementById('authModal'));
             authModal.show();
         }
@@ -2127,7 +1932,6 @@
             document.getElementById('authModalTitle').textContent = 'Registrarse';
             clearAuthErrors();
             
-            // Limpiar campos
             document.getElementById('registerName').value = '';
             document.getElementById('registerEmail').value = '';
             document.getElementById('registerPassword').value = '';
@@ -2140,7 +1944,6 @@
                 return;
             }
             
-            // Validar email
             if (!isValidEmail(email)) {
                 showAuthError('loginEmailError', 'Ingresa un correo electrónico válido');
                 return;
@@ -2158,13 +1961,11 @@
                 .then(function(userCredential) {
                     showLoading(false);
                     
-                    // Cerrar modal
                     const authModal = bootstrap.Modal.getInstance(document.getElementById('authModal'));
                     if (authModal) authModal.hide();
                     
                     showStatus('✅ Sesión iniciada correctamente', 'success');
                     
-                    // Si había un carrito en localStorage, migrarlo a Firebase
                     if (cart.length > 0) {
                         saveUserCartToFirebase();
                     }
@@ -2213,7 +2014,6 @@
             
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .then(function(userCredential) {
-                    // Guardar información adicional del usuario
                     const user = userCredential.user;
                     
                     const userData = {
@@ -2228,13 +2028,11 @@
                 .then(function() {
                     showLoading(false);
                     
-                    // Cerrar modal
                     const authModal = bootstrap.Modal.getInstance(document.getElementById('authModal'));
                     if (authModal) authModal.hide();
                     
                     showStatus('✅ Usuario registrado correctamente', 'success');
                     
-                    // Guardar carrito en Firebase para el nuevo usuario
                     if (cart.length > 0) {
                         saveUserCartToFirebase();
                     }
@@ -2291,19 +2089,12 @@
             if (currentUser) {
                 const displayName = currentUser.email ? currentUser.email.split('@')[0] : 'Usuario';
                 
-                // Verificar si es administrador
-                const isAdmin = currentUser.email === 'admin@luxuryshop.com' || currentUser.email === 'admin@admin.com';
-                
                 userSection.innerHTML = `
                     <div class="dropdown">
                         <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
                             <i class="fas fa-user-circle me-1"></i> ${displayName}
                         </button>
                         <ul class="dropdown-menu">
-                            ${isAdmin ? `
-                                <li><a class="dropdown-item" href="#" onclick="showAdminPanel()"><i class="fas fa-cog me-2"></i> Panel Admin</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                            ` : ''}
                             <li><a class="dropdown-item" href="#" onclick="viewMyOrders()"><i class="fas fa-box me-2"></i> Mis Pedidos</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i> Cerrar Sesión</a></li>
@@ -2367,7 +2158,6 @@
                     
                     ordersHtml += '</tbody></table></div>';
                     
-                    // Crear modal para mostrar pedidos
                     const modalHtml = `
                         <div class="modal fade" id="customerOrdersModal" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -2387,16 +2177,13 @@
                         </div>
                     `;
                     
-                    // Agregar modal al DOM
                     const modalContainer = document.createElement('div');
                     modalContainer.innerHTML = modalHtml;
                     document.body.appendChild(modalContainer);
                     
-                    // Mostrar modal
                     const ordersModal = new bootstrap.Modal(document.getElementById('customerOrdersModal'));
                     ordersModal.show();
                     
-                    // Eliminar modal del DOM al cerrar
                     document.getElementById('customerOrdersModal').addEventListener('hidden.bs.modal', function() {
                         document.body.removeChild(modalContainer);
                     });
@@ -2415,7 +2202,6 @@
                     const order = snapshot.val();
                     if (!order) return;
                     
-                    // Crear modal para ver detalles del pedido (versión cliente)
                     const modalHtml = `
                         <div class="modal fade" id="orderDetailsCustomerModal" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -2492,16 +2278,13 @@
                         </div>
                     `;
                     
-                    // Agregar modal al DOM
                     const modalContainer = document.createElement('div');
                     modalContainer.innerHTML = modalHtml;
                     document.body.appendChild(modalContainer);
                     
-                    // Mostrar modal
                     const detailsModal = new bootstrap.Modal(document.getElementById('orderDetailsCustomerModal'));
                     detailsModal.show();
                     
-                    // Eliminar modal del DOM al cerrar
                     document.getElementById('orderDetailsCustomerModal').addEventListener('hidden.bs.modal', function() {
                         document.body.removeChild(modalContainer);
                     });
@@ -2510,352 +2293,6 @@
                     console.error('❌ Error cargando detalles del pedido:', error);
                     showStatus('Error al cargar detalles: ' + error.message, 'danger');
                 });
-        }
-        
-        // ============================================
-        // FUNCIONES DEL PANEL DE ADMINISTRACIÓN
-        // ============================================
-        function showAdminPanel() {
-            // Verificar si el usuario es admin
-            if (!currentUser || !(currentUser.email === 'admin@luxuryshop.com' || currentUser.email === 'admin@admin.com')) {
-                showStatus('No tienes permisos de administrador', 'warning');
-                return;
-            }
-            
-            // Ocultar contenido principal
-            document.getElementById('mainContent').style.display = 'none';
-            document.getElementById('mainHeader').style.display = 'none';
-            document.getElementById('mainFooter').style.display = 'none';
-            document.getElementById('checkoutPage').style.display = 'none';
-            
-            // Mostrar panel de administración
-            document.getElementById('adminPage').style.display = 'block';
-            
-            // Cargar pedidos
-            loadAdminOrders();
-        }
-        
-        function loadAdminOrders() {
-            showLoading('Cargando pedidos...');
-            
-            const ordersRef = firebaseDatabase.ref('orders');
-            ordersRef.orderByChild('createdAt').once('value')
-                .then(function(snapshot) {
-                    showLoading(false);
-                    const ordersData = snapshot.val();
-                    allOrders = [];
-                    
-                    if (ordersData) {
-                        Object.keys(ordersData).forEach(function(key) {
-                            allOrders.push({
-                                id: key,
-                                ...ordersData[key]
-                            });
-                        });
-                    }
-                    
-                    // Ordenar por fecha (más reciente primero)
-                    allOrders.sort(function(a, b) {
-                        return (b.createdAt || 0) - (a.createdAt || 0);
-                    });
-                    
-                    renderAdminOrders(allOrders);
-                    updateAdminStats(allOrders);
-                })
-                .catch(function(error) {
-                    showLoading(false);
-                    console.error('❌ Error cargando pedidos admin:', error);
-                    showStatus('Error al cargar pedidos: ' + error.message, 'danger');
-                });
-        }
-        
-        function renderAdminOrders(orders) {
-            const ordersTable = document.getElementById('adminOrdersTable');
-            
-            if (!orders || orders.length === 0) {
-                ordersTable.innerHTML = `
-                    <tr>
-                        <td colspan="6" class="text-center">No hay pedidos registrados</td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            let html = '';
-            
-            orders.forEach(function(order) {
-                const date = order.createdAt ? new Date(order.createdAt).toLocaleDateString('es-ES', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }) : 'Sin fecha';
-                
-                html += `
-                    <tr>
-                        <td><strong>${order.orderNumber || 'N/A'}</strong></td>
-                        <td>
-                            <div>${order.userName || order.userEmail || 'Cliente'}</div>
-                            <small class="text-muted">${order.userEmail || ''}</small>
-                        </td>
-                        <td>${date}</td>
-                        <td>$${parseFloat(order.total || 0).toFixed(2)}</td>
-                        <td>
-                            <span class="badge ${getStatusClass(order.status)}" id="statusBadge_${order.id}">${order.status || 'pendiente'}</span>
-                        </td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary me-1" onclick="viewOrderDetailsAdmin('${order.id}')">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <div class="dropdown d-inline-block">
-                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    <i class="fas fa-cog"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" onclick="updateOrderStatus('${order.id}', 'confirmado')"><i class="fas fa-check-circle me-2 text-info"></i>Marcar como Confirmado</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="updateOrderStatus('${order.id}', 'enviado')"><i class="fas fa-shipping-fast me-2 text-primary"></i>Marcar como Enviado</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="updateOrderStatus('${order.id}', 'completado')"><i class="fas fa-check-double me-2 text-success"></i>Marcar como Completado</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#" onclick="updateOrderStatus('${order.id}', 'cancelado')"><i class="fas fa-times-circle me-2 text-danger"></i>Cancelar Pedido</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-            
-            ordersTable.innerHTML = html;
-        }
-        
-        function updateAdminStats(orders) {
-            if (!orders || orders.length === 0) {
-                document.getElementById('totalOrders').textContent = '0';
-                document.getElementById('pendingOrders').textContent = '0';
-                document.getElementById('completedOrders').textContent = '0';
-                return;
-            }
-            
-            const totalOrders = orders.length;
-            const pendingOrders = orders.filter(function(order) {
-                return order.status === 'pendiente';
-            }).length;
-            
-            const completedOrders = orders.filter(function(order) {
-                return order.status === 'completado';
-            }).length;
-            
-            document.getElementById('totalOrders').textContent = totalOrders;
-            document.getElementById('pendingOrders').textContent = pendingOrders;
-            document.getElementById('completedOrders').textContent = completedOrders;
-        }
-        
-        function viewOrderDetailsAdmin(orderId) {
-            const orderRef = firebaseDatabase.ref('orders/' + orderId);
-            orderRef.once('value')
-                .then(function(snapshot) {
-                    const order = snapshot.val();
-                    if (!order) return;
-                    
-                    // Crear modal para ver detalles del pedido (versión admin)
-                    const modalHtml = `
-                        <div class="modal fade" id="orderDetailsAdminModal" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Pedido #${order.orderNumber} (Admin)</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <h6>Información del Cliente</h6>
-                                                <p><strong>Nombre:</strong> ${order.userName || 'No especificado'}</p>
-                                                <p><strong>Email:</strong> ${order.userEmail || 'No especificado'}</p>
-                                                <p><strong>ID Usuario:</strong> ${order.userId || 'N/A'}</p>
-                                                
-                                                <h6 class="mt-4">Información de Pago</h6>
-                                                <p><strong>Método:</strong> ${order.paymentMethod || 'Transferencia'}</p>
-                                                <p><strong>Total:</strong> $${parseFloat(order.total || 0).toFixed(2)}</p>
-                                                <p><strong>Subtotal:</strong> $${parseFloat(order.subtotal || 0).toFixed(2)}</p>
-                                                <p><strong>Envío:</strong> $${parseFloat(order.shipping || 0).toFixed(2)}</p>
-                                                
-                                                <h6 class="mt-4">Información Cloudinary</h6>
-                                                <div class="border rounded p-3 bg-light">
-                                                    ${order.receiptUrl ? 
-                                                        `<p class="mb-1"><strong>URL:</strong> <a href="${order.receiptUrl}" target="_blank">Ver comprobante</a></p>` : 
-                                                        '<p class="mb-1 text-muted">No hay comprobante</p>'
-                                                    }
-                                                    ${order.receiptFileName ? `<p class="mb-1"><strong>Archivo:</strong> ${order.receiptFileName}</p>` : ''}
-                                                    ${order.receiptCloudinaryInfo ? `
-                                                        <p class="mb-1"><strong>Carpeta:</strong> ${order.receiptCloudinaryInfo.folder || 'samples/depositos'}</p>
-                                                        <p class="mb-1"><strong>Preset:</strong> ${order.receiptCloudinaryInfo.preset || 'Depositos'}</p>
-                                                    ` : ''}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h6>Productos</h6>
-                                                <div class="table-responsive">
-                                                    <table class="table table-sm">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Producto</th>
-                                                                <th>Cantidad</th>
-                                                                <th>Precio</th>
-                                                                <th>Total</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            ${order.items ? order.items.map(function(item) {
-                                                                return `
-                                                                    <tr>
-                                                                        <td>${item.name || 'Producto'}</td>
-                                                                        <td>${item.quantity || 1}</td>
-                                                                        <td>$${parseFloat(item.price || 0).toFixed(2)}</td>
-                                                                        <td>$${parseFloat((item.price || 0) * (item.quantity || 1)).toFixed(2)}</td>
-                                                                    </tr>
-                                                                `;
-                                                            }).join('') : ''}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                
-                                                <h6 class="mt-4">Estado del Pedido</h6>
-                                                <div class="mb-3">
-                                                    <span class="badge ${getStatusClass(order.status)}">${order.status || 'pendiente'}</span>
-                                                </div>
-                                                
-                                                <div class="mb-3">
-                                                    <label class="form-label">Actualizar Estado</label>
-                                                    <select class="form-select" id="updateStatusSelect">
-                                                        <option value="pendiente" ${order.status === 'pendiente' ? 'selected' : ''}>Pendiente</option>
-                                                        <option value="confirmado" ${order.status === 'confirmado' ? 'selected' : ''}>Confirmado</option>
-                                                        <option value="enviado" ${order.status === 'enviado' ? 'selected' : ''}>Enviado</option>
-                                                        <option value="completado" ${order.status === 'completado' ? 'selected' : ''}>Completado</option>
-                                                        <option value="cancelado" ${order.status === 'cancelado' ? 'selected' : ''}>Cancelado</option>
-                                                    </select>
-                                                </div>
-                                                <button class="btn btn-primary w-100" onclick="updateOrderStatus('${orderId}', document.getElementById('updateStatusSelect').value); bootstrap.Modal.getInstance(document.getElementById('orderDetailsAdminModal')).hide();">
-                                                    <i class="fas fa-save me-2"></i> Actualizar Estado
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    // Agregar modal al DOM
-                    const modalContainer = document.createElement('div');
-                    modalContainer.innerHTML = modalHtml;
-                    document.body.appendChild(modalContainer);
-                    
-                    // Mostrar modal
-                    const detailsModal = new bootstrap.Modal(document.getElementById('orderDetailsAdminModal'));
-                    detailsModal.show();
-                    
-                    // Eliminar modal del DOM al cerrar
-                    document.getElementById('orderDetailsAdminModal').addEventListener('hidden.bs.modal', function() {
-                        document.body.removeChild(modalContainer);
-                    });
-                })
-                .catch(function(error) {
-                    console.error('❌ Error cargando detalles del pedido:', error);
-                    showStatus('Error al cargar detalles: ' + error.message, 'danger');
-                });
-        }
-        
-        function updateOrderStatus(orderId, newStatus) {
-            if (!confirm(`¿Estás seguro de cambiar el estado a "${newStatus}"?`)) {
-                return;
-            }
-            
-            showLoading('Actualizando estado...');
-            
-            const orderRef = firebaseDatabase.ref('orders/' + orderId);
-            orderRef.update({
-                status: newStatus,
-                updatedAt: firebase.database.ServerValue.TIMESTAMP
-            })
-            .then(function() {
-                showLoading(false);
-                showStatus('✅ Estado actualizado correctamente', 'success');
-                
-                // Actualizar badge en la tabla
-                const statusBadge = document.getElementById('statusBadge_' + orderId);
-                if (statusBadge) {
-                    statusBadge.textContent = newStatus;
-                    statusBadge.className = 'badge ' + getStatusClass(newStatus);
-                }
-                
-                // Recargar estadísticas
-                loadAdminOrders();
-            })
-            .catch(function(error) {
-                showLoading(false);
-                console.error('❌ Error actualizando estado:', error);
-                showStatus('Error al actualizar estado: ' + error.message, 'danger');
-            });
-        }
-        
-        function getStatusClass(status) {
-            switch(status) {
-                case 'pendiente':
-                    return 'bg-warning';
-                case 'confirmado':
-                    return 'bg-info';
-                case 'enviado':
-                    return 'bg-primary';
-                case 'completado':
-                    return 'bg-success';
-                case 'cancelado':
-                    return 'bg-danger';
-                default:
-                    return 'bg-secondary';
-            }
-        }
-        
-        function filterAdminOrders() {
-            const statusFilter = document.getElementById('statusFilter').value;
-            const dateFrom = document.getElementById('dateFromFilter').value;
-            const dateTo = document.getElementById('dateToFilter').value;
-            
-            let filteredOrders = [...allOrders];
-            
-            // Filtrar por estado
-            if (statusFilter !== 'all') {
-                filteredOrders = filteredOrders.filter(function(order) {
-                    return order.status === statusFilter;
-                });
-            }
-            
-            // Filtrar por fecha
-            if (dateFrom) {
-                const fromDate = new Date(dateFrom).getTime();
-                filteredOrders = filteredOrders.filter(function(order) {
-                    return order.createdAt >= fromDate;
-                });
-            }
-            
-            if (dateTo) {
-                const toDate = new Date(dateTo + 'T23:59:59').getTime();
-                filteredOrders = filteredOrders.filter(function(order) {
-                    return order.createdAt <= toDate;
-                });
-            }
-            
-            renderAdminOrders(filteredOrders);
-        }
-        
-        function clearFilters() {
-            document.getElementById('statusFilter').value = 'all';
-            document.getElementById('dateFromFilter').value = '';
-            document.getElementById('dateToFilter').value = '';
-            loadAdminOrders();
         }
         
         // ============================================
@@ -2878,13 +2315,11 @@
         }
         
         function clearAuthErrors() {
-            // Limpiar todos los mensajes de error
             document.querySelectorAll('.auth-error').forEach(function(el) {
                 el.textContent = '';
                 el.style.display = 'none';
             });
             
-            // Limpiar errores generales
             const loginError = document.getElementById('loginGeneralError');
             const registerError = document.getElementById('registerGeneralError');
             if (loginError) loginError.style.display = 'none';
@@ -2919,7 +2354,6 @@
                 messageSpan.textContent = message;
                 alert.style.display = 'block';
                 
-                // Auto-ocultar después de 5 segundos
                 setTimeout(function() {
                     if (alert.style.display === 'block') {
                         hideStatus();
@@ -2952,7 +2386,6 @@
             const originalPrice = product.onSale && product.salePrice ? 
                 (product.price || 0) : null;
             
-            // Crear modal para detalles del producto
             const modalHtml = `
                 <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -3014,19 +2447,33 @@
                 </div>
             `;
             
-            // Agregar modal al DOM
             const modalContainer = document.createElement('div');
             modalContainer.innerHTML = modalHtml;
             document.body.appendChild(modalContainer);
             
-            // Mostrar modal
             const productModal = new bootstrap.Modal(document.getElementById('productModal'));
             productModal.show();
             
-            // Eliminar modal del DOM al cerrar
             document.getElementById('productModal').addEventListener('hidden.bs.modal', function() {
                 document.body.removeChild(modalContainer);
             });
+        }
+        
+        function getStatusClass(status) {
+            switch(status) {
+                case 'pendiente':
+                    return 'bg-warning';
+                case 'confirmado':
+                    return 'bg-info';
+                case 'enviado':
+                    return 'bg-primary';
+                case 'completado':
+                    return 'bg-success';
+                case 'cancelado':
+                    return 'bg-danger';
+                default:
+                    return 'bg-secondary';
+            }
         }
         
         // ============================================
@@ -3037,11 +2484,9 @@
         console.log("☁️ Cloudinary: Configurado correctamente con tus datos");
         console.log("📁 Imágenes se guardarán en: samples/depositos");
         console.log("📱 Tienda online lista para usar");
-        console.log("👑 Panel de administración disponible para admin@luxuryshop.com");
         console.log("💳 Sistema de pago con Cloudinary funcionando correctamente");
         console.log("🎯 Widget de Cloudinary listo para subir comprobantes");
         
-        // Verificar que Cloudinary esté cargado
         if (typeof cloudinary !== 'undefined') {
             console.log("✅ Cloudinary SDK cargado correctamente");
         } else {
